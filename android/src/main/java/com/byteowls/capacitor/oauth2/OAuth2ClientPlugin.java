@@ -77,6 +77,7 @@ public class OAuth2ClientPlugin extends Plugin {
     private static final String ERR_GENERAL = "ERR_GENERAL";
     private static final String ERR_STATES_NOT_MATCH = "ERR_STATES_NOT_MATCH";
     private static final String ERR_NO_AUTHORIZATION_CODE = "ERR_NO_AUTHORIZATION_CODE";
+    private static final String ERR_ACCESS_DENIED = "ERR_ACCESS_DENIED";
 
     private OAuth2Options oauth2Options;
     private AuthorizationService authService;
@@ -342,6 +343,8 @@ public class OAuth2ClientPlugin extends Plugin {
                     savedCall.reject(USER_CANCELLED);
                 } else if (error.code == AuthorizationException.AuthorizationRequestErrors.STATE_MISMATCH.code) {
                     savedCall.reject(ERR_STATES_NOT_MATCH);
+                } else if (error.code == AuthorizationException.AuthorizationRequestErrors.ACCESS_DENIED.code) {
+                    savedCall.reject(ERR_ACCESS_DENIED);
                 } else {
                     savedCall.reject(ERR_GENERAL, error);
                 }
